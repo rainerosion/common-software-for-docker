@@ -1,0 +1,26 @@
+version: '3'
+services:
+  mongo:
+    container_name: mongo
+    image: mongo:latest # 可以修改为自己需要的版本
+    restart: on-failure
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongodb
+      MONGO_INITDB_ROOT_PASSWORD: mongodb
+    volumes:
+      - ./data/db:/data/db # 挂载数据目录
+      - ./data/log:/var/log/mongodb  # 挂载日志目录
+      - ./data/config:/etc/mongo  # 挂载配置目录
+  mongo-express:
+    image: mongo-express
+    restart: on-failure
+    ports:
+      - 27018:8081
+    depends_on:
+      - mongo
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: mongodb
+      ME_CONFIG_MONGODB_ADMINPASSWORD: mongodb
+      ME_CONFIG_MONGODB_URL: mongodb://mongodb:mongodb@mongo:27017/
