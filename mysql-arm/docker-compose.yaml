@@ -1,0 +1,18 @@
+version: '3'
+services:
+    mysql-arm:
+        image: biarms/mysql:5.7.30
+        container_name: mysql-server-arm
+        restart: always
+        ports:
+            - 3306:3306
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: test
+            MYSQL_USER: test
+            MYSQL_PASSWORD: test
+        volumes:
+            - ./data/data:/var/lib/mysql
+            - ./data/log:/var/log/mysql
+            - ./data/etc/my.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
+#            - /etc/localtime:/etc/localtime:ro
